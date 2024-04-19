@@ -12,7 +12,7 @@ async def aggregate_sum_from_date(
         dt_from: str,
         dt_upto: str,
         group_type: Literal['hour', 'day', 'month']):
-
+    print(dt_from, dt_upto, group_type)
     if not (group_type == 'hour' or group_type == 'day' or group_type == 'month'):
         e = f"group_type value is {group_type} but this value should be only ('hour' | 'day' | 'month')"
         logger.warning(e)
@@ -86,15 +86,9 @@ async def aggregate_sum_from_date(
 
     data = await collection.aggregate(query).to_list(None)
     data = data[0]
-    print('data')
-    pprint(data)
-    print()
 
     dates = dt_range(date_from=dt_from, date_to=dt_upto, step=group_type)
-    print("dates")
-    pprint(dates)
-    print()
 
     result = fill_blanks(date_list=dates, data_df=data)
-    print("result")
-    pprint(result)
+
+    return result
