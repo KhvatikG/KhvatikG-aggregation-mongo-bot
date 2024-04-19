@@ -12,7 +12,7 @@ class MongoDbFactory:
         return self.client.get_database(db_name)
 
 
-db_factory = MongoDbFactory(uri=settings.URI)
+db_factory = MongoDbFactory(uri=settings.DB_URI)
 
 db = db_factory.get_db(settings.DB_NAME)
 
