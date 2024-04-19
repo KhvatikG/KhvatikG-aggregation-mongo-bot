@@ -1,5 +1,4 @@
 from datetime import datetime
-from pprint import pprint
 from typing import Literal
 
 from motor.motor_asyncio import AsyncIOMotorDatabase
@@ -7,12 +6,13 @@ from loguru import logger
 
 from utils.dataframe_skip_filling import dt_range, fill_blanks
 
+
 async def aggregate_sum_from_date(
         db_: AsyncIOMotorDatabase,
         dt_from: str,
         dt_upto: str,
         group_type: Literal['hour', 'day', 'month']):
-    print(dt_from, dt_upto, group_type)
+
     if not (group_type == 'hour' or group_type == 'day' or group_type == 'month'):
         e = f"group_type value is {group_type} but this value should be only ('hour' | 'day' | 'month')"
         logger.warning(e)
@@ -71,7 +71,7 @@ async def aggregate_sum_from_date(
             "_id": 0,
             "date": "$_id.formatted_date",
             "totalValue": "$totalValue"
-            }},
+        }},
         {"$group": {
             "_id": None,
             "data": {
