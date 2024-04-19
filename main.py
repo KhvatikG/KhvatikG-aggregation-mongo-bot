@@ -3,12 +3,10 @@ from datetime import datetime
 from pprint import pprint
 from typing import Literal
 
-from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
+from motor.motor_asyncio import AsyncIOMotorDatabase
 from loguru import logger
 
-uri = "mongodb://localhost:27017/?authSource=admin"
-client = AsyncIOMotorClient(uri)
-db = client.get_database("sampleDB")
+from core.mongo_db import db
 
 
 async def aggregate_sum_from_date(
