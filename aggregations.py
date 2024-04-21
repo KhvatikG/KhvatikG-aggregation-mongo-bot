@@ -11,10 +11,29 @@ async def aggregate_sum_from_date(
         db_: AsyncIOMotorDatabase,
         dt_from: datetime,
         dt_upto: datetime,
-        group_type: Literal['hour', 'day', 'month']):
+        group_type: Literal['hour', 'day', 'month']) -> dict | str:
+    """
+    Агрегирует суммы данных из базы между двумя датами
+    с заданным интервалом группировки.
+
+    Данная асинхронная функция выполняет агрегацию данных из коллекции MongoDB,
+    суммируя значения в указанные временные периоды (часы, дни, месяцы) между двумя датами.
+
+    :param db_: Экземпляр базы данных MongoDB.
+    :param dt_from: Начальная дата и время для агрегации.
+    :param dt_upto: Конечная дата и время для агрегации.
+    :param group_type: Тип группировки
+            для агрегации. Допустимые значения: 'hour', 'day', 'month'.
+    :return: Словарь вида {'dataset': list[int], 'labels': list[str]},
+             с датами и агрегированными значениями. Даты, для которых не найдены данные,
+             будут включены с нулевым значением суммы.
+
+             Если group_type не один из ожидаемых значений,
+             функция возвращает строку с ошибкой и логирует предупреждение.
+    """
 
     if not (group_type == 'hour' or group_type == 'day' or group_type == 'month'):
-        e = f"group_type value is {group_type} but this value should be only ('hour' | 'day' | 'month')"
+        e = f"group_type must be either 'hour', 'day', or 'month'. Received: {group_type}"
         logger.warning(e)
         return e
 
