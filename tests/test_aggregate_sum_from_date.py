@@ -1,8 +1,9 @@
 import asyncio
-from tests.tasks_for_tests import task1, task2, task3
-from aggregations import aggregate_sum_from_date
 
 import pytest
+
+from tests.tasks_for_tests import task1, task2, task3
+from aggregations import aggregate_sum_from_date
 
 pytestmark = pytest.mark.asyncio(scope="module")
 loop: asyncio.AbstractEventLoop

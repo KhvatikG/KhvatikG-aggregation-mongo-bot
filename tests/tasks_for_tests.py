@@ -1,5 +1,3 @@
-import pytest
-from aggregations import aggregate_sum_from_date
 from core.mongo_db import db
 
 
