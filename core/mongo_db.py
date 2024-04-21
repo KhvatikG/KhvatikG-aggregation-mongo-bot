@@ -19,8 +19,6 @@ class MongoDbFactory:
         return self.client.get_database(db_name)
 
 
-
 db_factory = MongoDbFactory(uri=settings.DB_URI)
 
 db = db_factory.get_db(db_name=settings.DB_NAME)
-
