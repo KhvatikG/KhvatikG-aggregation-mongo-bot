@@ -1,20 +1,23 @@
+from motor.motor_asyncio import AsyncIOMotorDatabase
+
 from core.mongo_db import db
 
 
 class TaskFactory:
 
-    def __init__(self, task: dict, answer_for_task: dict):
+    def __init__(self, db_: AsyncIOMotorDatabase, task: str, answer_for_task: dict):
+        self.db_ = db_
         self.task = task
         self.answer_for_task = answer_for_task
 
 
 task1 = TaskFactory(
-    task={
-        "db_": db,
+    db_=db,
+    task='''{
         "dt_from": "2022-09-01T00:00:00",
         "dt_upto": "2022-12-31T23:59:00",
         "group_type": "month"
-    },
+    }''',
     answer_for_task={
         "dataset": [5906586, 5515874, 5889803, 6092634],
         "labels": ["2022-09-01T00:00:00", "2022-10-01T00:00:00", "2022-11-01T00:00:00", "2022-12-01T00:00:00"]
@@ -22,12 +25,12 @@ task1 = TaskFactory(
 )
 
 task2 = TaskFactory(
-    task={
-        "db_": db,
+    db_=db,
+    task='''{
         "dt_from": "2022-10-01T00:00:00",
         "dt_upto": "2022-11-30T23:59:00",
         "group_type": "day"
-    },
+    }''',
     answer_for_task={
         "dataset": [0, 0, 0, 195028, 190610, 193448, 203057, 208605, 191361, 186224, 181561, 195264, 213854, 194070,
                     208372, 184966, 196745, 185221, 196197, 200647, 196755, 221695, 189114, 204853, 194652, 188096,
@@ -57,12 +60,12 @@ task2 = TaskFactory(
 )
 
 task3 = TaskFactory(
-    task={
-        "db_": db,
+    db_=db,
+    task='''{
         "dt_from": "2022-02-01T00:00:00",
         "dt_upto": "2022-02-02T00:00:00",
         "group_type": "hour"
-    },
+    }''',
     answer_for_task={
         "dataset": [8177, 8407, 4868, 7706, 8353, 7143, 6062, 11800, 4077, 8820, 4788, 11045, 13048, 2729, 4038, 9888,
                     7490, 11644, 11232, 12177, 2741, 5341, 8730, 4718, 0],
