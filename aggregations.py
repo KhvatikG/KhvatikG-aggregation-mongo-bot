@@ -9,8 +9,8 @@ from utils.dataframe_skip_filling import dt_range, fill_blanks
 
 async def aggregate_sum_from_date(
         db_: AsyncIOMotorDatabase,
-        dt_from: str,
-        dt_upto: str,
+        dt_from: datetime,
+        dt_upto: datetime,
         group_type: Literal['hour', 'day', 'month']):
 
     if not (group_type == 'hour' or group_type == 'day' or group_type == 'month'):
@@ -49,8 +49,8 @@ async def aggregate_sum_from_date(
     query = [
         {"$match": {
             "dt": {
-                "$gte": datetime.fromisoformat(dt_from),
-                "$lte": datetime.fromisoformat(dt_upto)
+                "$gte": dt_from,
+                "$lte": dt_upto
             }
         }},
         {"$project": {

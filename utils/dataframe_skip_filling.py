@@ -5,7 +5,7 @@ from dateutil.relativedelta import relativedelta
 from loguru import logger
 
 
-def dt_range(date_from: str, date_to: str, step: Literal['hour', 'day', 'month']) -> list[str] | None:
+def dt_range(date_from: datetime, date_to: datetime, step: Literal['hour', 'day', 'month']) -> list[str] | None:
     """
     Возвращает список дат в ISO от date_from до date_to включительно, с шагом step.
     :param date_from: Первая дата диапазона.
@@ -13,8 +13,8 @@ def dt_range(date_from: str, date_to: str, step: Literal['hour', 'day', 'month']
     :param step: Шаг изменения даты.
     :return: Список дат в ISO от date_from до date_to включительно, с шагом step.
     """
-    current = datetime.fromisoformat(date_from)
-    date_to = datetime.fromisoformat(date_to)
+    current = date_from
+    date_to = date_to
     result = []
 
     match step:

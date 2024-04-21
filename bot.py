@@ -37,17 +37,14 @@ async def command_start_handler(message: Message) -> None:
 @dp.message()
 async def aggregate_sum_from_date_handler(message: Message):
     try:
-        # Попытка распарсить JSON из текста сообщения
-        data_dict = json.loads(message.text)
         # Валидация данных с помощью Pydantic
-        data = ValidIncomingMessage(**data_dict)
-        dt_from, dt_upto, group_type = data_dict.values()
+        data = ValidIncomingMessage.model_validate_json(message.text)
 
         answer = await aggregate_sum_from_date(
             db_=db,
-            dt_from=dt_from,
-            dt_upto=dt_upto,
-            group_type=group_type)
+            dt_from=data.dt_from,
+            dt_upto=data.dt_upto,
+            group_type=data.group_type)
 
         answer = json.dumps(answer)
 
@@ -55,7 +52,7 @@ async def aggregate_sum_from_date_handler(message: Message):
     except json.JSONDecodeError:
         await message.reply("Ошибка в формате данных. Отправьте данные в формате JSON.")
     except ValidationError as e:
-        logging.warning("Ошибка валидации")
+        logging.warning(f"Ошибка валидации {e}")
         # Если данные не валидны, отправляем сообщение с описанием ошибки
         await message.reply(f"Ошибка в данных: {e}")
 
